@@ -12,4 +12,5 @@ public class MemberDto {
     private Address address;
     private Long teamId;
     private String teamName;
+
 }

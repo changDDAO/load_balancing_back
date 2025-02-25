@@ -1,8 +1,10 @@
 package com.changddao.load_balancing_back.repository.member;
 
+import com.changddao.load_balancing_back.dto.MemberDto;
 import com.changddao.load_balancing_back.dto.MemberSearchDto;
 import com.changddao.load_balancing_back.entity.Member;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import static com.changddao.load_balancing_back.entity.QMember.member;
+import static com.changddao.load_balancing_back.entity.QTeam.team;
 
 
 @RequiredArgsConstructor
@@ -20,8 +23,27 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
+    public Page<MemberDto> findAllMemberAndTeamsWithConditions(MemberSearchDto cond, Pageable pageable) {
+        List<MemberDto> result = queryFactory.select(Projections.constructor(MemberDto.class,
+                        member.memberId,
+                        member.name,
+                        member.address
+                        , team.teamId,
+                        team.teamName
+                ))
+                .from(member)
+                .leftJoin(member.team, team)
+                .where(searchPredicate(cond))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        return new PageImpl<>(result, pageable, result.size());
+    }
+
+    @Override
     public Page<Member> findAllMembersWithConditions(MemberSearchDto cond, Pageable pageable) {
         List<Member> result = queryFactory.selectFrom(member)
+                .join(member.team, team).fetchJoin()
                 .where(searchPredicate(cond))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
