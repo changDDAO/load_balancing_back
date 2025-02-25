@@ -22,6 +22,17 @@ import static com.changddao.load_balancing_back.entity.QTeam.team;
 public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
+    /*동적쿼리를 이용하여 조건에 맞는 Member들만 조회한다.*/
+    @Override
+    public List<Member> findAllMembersWithCond(MemberSearchDto cond) {
+        return queryFactory.select(member)
+                .from(member)
+                .leftJoin(member.team, team).fetchJoin()
+                .where(searchPredicate(cond))
+                .fetch();
+    }
+
+
     @Override
     public Page<MemberDto> findAllMemberAndTeamsWithConditions(MemberSearchDto cond, Pageable pageable) {
         List<MemberDto> result = queryFactory.select(Projections.constructor(MemberDto.class,
@@ -51,20 +62,27 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
         return new PageImpl<>(result, pageable, result.size());
     }
 
-/*동적 JPQL을 실행할 수 있도록 BooleanBuilder를 만들어준다.*/
+    @Override
+    public Member findByNameWithTeam(String name) {
+        return queryFactory.selectFrom(member)
+                .leftJoin(member.team, team).fetchJoin()
+                .where(member.name.eq(name))
+                .fetchOne();
+    }
+    /*동적 JPQL을 실행할 수 있도록 BooleanBuilder를 만들어준다.*/
 
     private BooleanBuilder searchPredicate(MemberSearchDto cond) {
         return new BooleanBuilder().and(memberNameEq(cond.getName()))
                 .and(ageGoe(cond.getMinAge()))
-                .and(ageLoe(cond.getMinAge()));
-
+                .and(ageLoe(cond.getMaxAge()))
+                .and(teamNameEq(cond.getTeamName()));
 
     }
 
 /*BooleanBuilder에 합쳐질 조각들*/
 
     private BooleanExpression memberNameEq(String name) {
-        return name != null ? member.name.eq(name) : null;
+        return name != null ? member.name.like(name) : null;
     }
     /*search condition에 minAge이상인 것들만 조회하기 위함*/
     private BooleanExpression ageGoe(Integer age) {
@@ -74,6 +92,8 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     /*search condition에 minAge이하인 것들만 조회하기 위함*/
     private BooleanExpression ageLoe(Integer age) {
         return age!=null ? member.age.loe(age) : null;
-
+    }
+    private BooleanExpression teamNameEq(String teamName) {
+        return teamName != null ? team.teamName.like(teamName) : null;
     }
 }
