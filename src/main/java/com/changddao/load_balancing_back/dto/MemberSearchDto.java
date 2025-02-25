@@ -17,4 +17,6 @@ public class MemberSearchDto {
     /*팀 이름*/
     private String teamName;
 
+    private String pageNum;
+
 }
