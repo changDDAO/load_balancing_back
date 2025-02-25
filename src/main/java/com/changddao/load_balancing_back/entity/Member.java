@@ -15,6 +15,8 @@ public class Member extends BaseEntity{
     private Long memberId;
     /*멤버 이름*/
     private String name;
+    /*멤버 나이*/
+    private Integer age;
     /*멤버 주소*/
     @Embedded
     private Address address;
@@ -22,8 +24,9 @@ public class Member extends BaseEntity{
     @JoinColumn(name = "team_id")
     private Team team;
     @Builder
-    public Member(String name, Address address) {
+    public Member(String name,Integer age, Address address) {
         this.name = name;
+        this.age = age;
         this.address = address;
     }
 
