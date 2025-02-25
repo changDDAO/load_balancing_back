@@ -3,19 +3,22 @@ package com.changddao.load_balancing_back.service;
 import com.changddao.load_balancing_back.dto.MemberDto;
 import com.changddao.load_balancing_back.dto.MemberSearchDto;
 import com.changddao.load_balancing_back.entity.Member;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface MemberService {
-    List<MemberDto> findAllWithTeam(MemberSearchDto cond, Pageable pageable);
-
-    List<Member> findAll(MemberSearchDto cond, Pageable pageable);
-
+    /*leftJoin을 이용하여 Dto에 원하는 값만 mapping*/
+    Page<MemberDto> findAllWithTeam(MemberSearchDto cond, Pageable pageable);
+    /*fetchjoin을 사용하여 연관관계를 가진 Entity까지 전부 조회하기*/
+    Page<Member> findAll(MemberSearchDto cond, Pageable pageable);
+    /*멤버 저장*/
+    Member joinMember(Member member);
     Optional<Member> findById(Long id);
 
-    void changeName(String name);
+    void changeName(Member member, String name);
 
     void deleteById(Long id);
 }

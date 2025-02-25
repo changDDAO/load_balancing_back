@@ -42,4 +42,8 @@ public class Member extends BaseEntity{
             team.getMembers().add(this);
         }
     }
+    /*Member Entity 의 name field값을 변경하기 위한 메서드*/
+    public void changeName(String name) {
+        this.name = name;
+    }
 }
