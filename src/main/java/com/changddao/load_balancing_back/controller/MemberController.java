@@ -27,7 +27,7 @@ public class MemberController {
         return responseService.handleSingleResult(memberService.findAllWithTeam(cond, pageRequest));
     }
     @PostMapping("/v1/member/join")
-    public SingleResult<Member> joinMember(@ModelAttribute("memberInfo") Member member) {
+    public SingleResult<Member> joinMember(@RequestBody Member member) {
         return responseService.handleSingleResult(memberService.joinMember(member));
     }
 
