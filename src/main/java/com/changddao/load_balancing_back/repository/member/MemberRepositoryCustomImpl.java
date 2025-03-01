@@ -44,6 +44,7 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
                 ))
                 .from(member)
                 .leftJoin(member.team, team)
+                /*.fetchJoin() 얘같은 경우에는 Entity사이에서 fetch Type이 Lazy로 설정 돼있는 애들을 한번에 끌어오는거*/
                 .where(searchPredicate(cond))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
