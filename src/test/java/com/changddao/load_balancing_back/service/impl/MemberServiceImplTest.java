@@ -96,5 +96,27 @@ class MemberServiceImplTest {
         Member changMan= memberRepository.findByName("changDDAO");
         assertThat(changMan.getTeam()).isEqualTo(team);
     }
+    @Test
+    @DisplayName("멤버 이름변경 테스트")
+    void changeMemberName(){
+    //given
+        Member changDDAO = memberRepository.findByName("changDDAO");
+        changDDAO.changeName("changed");
+        assertThat(changDDAO.getName()).isEqualTo("changed");
+        //when
+    //then
+    }
+    @Test
+    @DisplayName("팀이름 변경 테스트")
+    void changeTeamName(){
+    //given
+        List<Team> byTeamName = teamRepository.findByTeamNameContaining("제주");
+        String teamName = byTeamName.stream().findAny().orElseThrow(()->new RuntimeException("찾을 수 있는 팀이없습니다."))
+                .getTeamName();
+
+        //when
+        log.info("teamName:{}", teamName);
+    //then
+    }
 
 }
