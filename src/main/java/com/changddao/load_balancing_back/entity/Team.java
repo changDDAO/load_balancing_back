@@ -19,7 +19,6 @@ public class Team {
     /*팀이름*/
     private String teamName;
     @OneToMany(mappedBy = "team")
-    @JsonIgnore
     private List<Member> members = new ArrayList<>();
 
     @Builder
