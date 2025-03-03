@@ -10,10 +10,12 @@ import com.changddao.load_balancing_back.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberController {
     private final ResponseService responseService;
     private final MemberService memberService;
@@ -36,17 +38,21 @@ public class MemberController {
     }
 
     /*멤버 가입*/
+    @Transactional
     @PostMapping("/v1/member/join")
     public SingleResult<Member> joinMember(@RequestBody Member member) {
         return responseService.handleSingleResult(memberService.joinMember(member));
     }
     /*멤버 삭제*/
+    @Transactional
     @DeleteMapping("/v1/member/{id}")
     public SingleResult<Long> deleteMember(@PathVariable("id") Long id) {
+        deleteMember(id);
         return responseService.handleSingleResult(id);
     }
     /*멤버 정보 변경*/
-    @PutMapping("/v1/member{id}")
+    @Transactional
+    @PutMapping("/v1/member/{id}")
     public SingleResult<Member> changeMember(@RequestBody Member member) {
         Member findMember = memberRepository.findById(member.getMemberId()).orElseThrow(() -> new RuntimeException("찾고자하는 멤버가 없습니다."));
         findMember.changeName(member.getName());
