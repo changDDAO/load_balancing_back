@@ -11,4 +11,7 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
 
     /*@Query("select t from Team t where t.teamName like %:teamName%")*/
     List<Team> findByTeamNameContaining(@Param("teamName")String teamName);
+
+    @Query("select t from Team t left join fetch t.members")
+    List<Team> findAllWithMembers();
 }

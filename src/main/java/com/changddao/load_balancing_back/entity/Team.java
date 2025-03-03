@@ -1,5 +1,6 @@
 package com.changddao.load_balancing_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class Team {
     /*팀이름*/
     private String teamName;
     @OneToMany(mappedBy = "team")
+    @JsonIgnore
     private List<Member> members = new ArrayList<>();
 
     @Builder
