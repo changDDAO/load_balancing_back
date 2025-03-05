@@ -32,4 +32,9 @@ public class Team {
         member.setTeam(this);
     }
 
+    /*팀 이름 변경 메서드 작성*/
+    public void changeTeamName(String name) {
+        this.teamName = name;
+    }
+
 }

@@ -8,10 +8,7 @@ import com.changddao.load_balancing_back.repository.team.TeamRepository;
 import com.changddao.load_balancing_back.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TeamController {
     private final ResponseService responseService;
     private final TeamRepository repository;
+
     @GetMapping("/v1/teams")
     public MultipleResult<Team> getTeams(){
         return responseService.handleListResult(repository.findAllWithMembers());
     }
+
     @GetMapping("/v1/team/{id}")
     public SingleResult<TeamDto> getTeamWithMember(@PathVariable("id") Long id) {
         Team team = repository.findByIdWithMembers(id)
@@ -30,5 +29,19 @@ public class TeamController {
         SingleResult<TeamDto> teamDtoSingleResult = responseService.handleSingleResult(TeamDto.convertTeamDto(team));
         return responseService.handleSingleResult(TeamDto.convertTeamDto(team));
     }
+    /*팀 이름 변경*/
+    @PutMapping("/v1/team/{id}")
+    public SingleResult<TeamDto> changTeamName(@PathVariable("id") Long id, @RequestBody TeamDto dto) {
+        Team findTeam = repository.findById(id).orElseThrow(() -> new RuntimeException("찾고자 하는 팀이 없습니다."));
+        findTeam.changeTeamName(dto.getTeamName());
+        return responseService.handleSingleResult(TeamDto.convertTeamDto(findTeam));
+    }
+    @PostMapping("v1/team/{id}")
+    public SingleResult<TeamDto> onlyTeam(@PathVariable("id") Long id){
+        Team findTeam = repository.findByIdWithOutMembers(id).orElseThrow(() -> new RuntimeException("찾고자 하는 팀이 없습니다."));
+        return responseService.handleSingleResult(new TeamDto(findTeam.getTeamId(), findTeam.getTeamName(), null));
+    }
+
+
 
 }
