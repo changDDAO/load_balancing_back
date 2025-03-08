@@ -41,6 +41,17 @@ public class TeamController {
         Team findTeam = repository.findByIdWithOutMembers(id).orElseThrow(() -> new RuntimeException("찾고자 하는 팀이 없습니다."));
         return responseService.handleSingleResult(new TeamDto(findTeam.getTeamId(), findTeam.getTeamName(), null));
     }
+    @DeleteMapping("v1/team/{id}")
+    public SingleResult<String> deleteTeam(@PathVariable("id") Long id) {
+        Team findTeam = repository.findById(id).orElseThrow(() -> new RuntimeException("찾고자 하는 팀이 없습니다."));
+        if (findTeam.getMembers().isEmpty()) {
+            repository.delete(findTeam);
+        }else{
+
+        }
+        String msg = findTeam.getTeamName() + "이 삭제되었습니다.";
+        return responseService.handleSingleResult(msg);
+    }
 
 
 

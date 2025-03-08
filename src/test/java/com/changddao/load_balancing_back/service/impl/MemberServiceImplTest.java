@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -116,6 +117,20 @@ class MemberServiceImplTest {
 
         //when
         log.info("teamName:{}", teamName);
+    //then
+    }
+    @Test
+    @DisplayName("멤버 여러명 삭제 테스트")
+    void deleteByIds(){
+    //given
+        MemberSearchDto cond = new MemberSearchDto();
+        cond.setTeamName("창호팀");
+        List<Member> findMembers = memberRepository.findAllMembersWithCond(cond);
+        List<Long> memberIds = findMembers.stream().map(Member::getMemberId).toList();
+        //when
+        for (Long memberId : memberIds) {
+            log.info("memberId : {}", memberId);
+        }
     //then
     }
 

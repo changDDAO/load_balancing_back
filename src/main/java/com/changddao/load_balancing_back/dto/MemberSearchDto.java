@@ -11,9 +11,9 @@ public class MemberSearchDto {
     /*검색 이름*/
     private String name;
     /*최소 연령*/
-    private int minAge;
+    private Integer minAge;
     /*최대 연령*/
-    private int maxAge;
+    private Integer maxAge;
     /*팀 이름*/
     private String teamName;
 

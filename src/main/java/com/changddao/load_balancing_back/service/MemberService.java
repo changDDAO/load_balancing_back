@@ -17,8 +17,11 @@ public interface MemberService {
     /*멤버 저장*/
     Member joinMember(Member member);
     Optional<Member> findById(Long id);
-
+    /*멤버 이름변경*/
     void changeName(Member member, String name);
-
+    /*멤버 삭제*/
     void deleteById(Long id);
+
+    /*멤버 여러명 삭제*/
+    void deleteByIds(List<Long> memberIds);
 }

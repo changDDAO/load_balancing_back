@@ -77,7 +77,6 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
                 .and(ageGoe(cond.getMinAge()))
                 .and(ageLoe(cond.getMaxAge()))
                 .and(teamNameEq(cond.getTeamName()));
-
     }
 
 /*BooleanBuilder에 합쳐질 조각들*/
