@@ -3,18 +3,24 @@ package com.changddao.load_balancing_back.controller;
 import com.changddao.load_balancing_back.dto.TeamDto;
 import com.changddao.load_balancing_back.dto.response.MultipleResult;
 import com.changddao.load_balancing_back.dto.response.SingleResult;
+import com.changddao.load_balancing_back.entity.Member;
 import com.changddao.load_balancing_back.entity.Team;
 import com.changddao.load_balancing_back.repository.team.TeamRepository;
+import com.changddao.load_balancing_back.service.MemberService;
 import com.changddao.load_balancing_back.service.ResponseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @Transactional
 public class TeamController {
     private final ResponseService responseService;
+    private final MemberService memberService;
     private final TeamRepository repository;
 
     @GetMapping("/v1/teams")
@@ -41,17 +47,20 @@ public class TeamController {
         Team findTeam = repository.findByIdWithOutMembers(id).orElseThrow(() -> new RuntimeException("찾고자 하는 팀이 없습니다."));
         return responseService.handleSingleResult(new TeamDto(findTeam.getTeamId(), findTeam.getTeamName(), null));
     }
+    /*팀삭제 api 단, 팀에 소속된 멤버들이 Null인 경우, 즉시 삭제가 가능하나, team을 참조하고 있는 member들이
+    * 있다면, 멤버 먼저 삭제*/
+    @Transactional
     @DeleteMapping("v1/team/{id}")
     public SingleResult<String> deleteTeam(@PathVariable("id") Long id) {
-        Team findTeam = repository.findById(id).orElseThrow(() -> new RuntimeException("찾고자 하는 팀이 없습니다."));
-        if (findTeam.getMembers().isEmpty()) {
-            repository.delete(findTeam);
-        }else{
+        Team findTeam = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("찾고자 하는 팀이 없습니다."));
 
-        }
+        repository.delete(findTeam);  // CascadeType.ALL 설정으로 연관된 Member들도 삭제됨.
+
         String msg = findTeam.getTeamName() + "이 삭제되었습니다.";
         return responseService.handleSingleResult(msg);
     }
+
 
 
 

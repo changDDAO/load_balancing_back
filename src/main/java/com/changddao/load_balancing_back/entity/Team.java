@@ -18,7 +18,7 @@ public class Team {
     private Long teamId;
     /*팀이름*/
     private String teamName;
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Member> members = new ArrayList<>();
 
     @Builder

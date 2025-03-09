@@ -53,6 +53,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void deleteByIds(List<Long> memberIds) {
         memberRepository.deleteMemberByIds(memberIds);
