@@ -8,6 +8,7 @@ import com.changddao.load_balancing_back.entity.Team;
 import com.changddao.load_balancing_back.repository.team.TeamRepository;
 import com.changddao.load_balancing_back.service.MemberService;
 import com.changddao.load_balancing_back.service.ResponseService;
+import com.changddao.load_balancing_back.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ import java.util.List;
 @Transactional
 public class TeamController {
     private final ResponseService responseService;
-    private final MemberService memberService;
+    private final TeamService teamService;
     private final TeamRepository repository;
 
     @GetMapping("/v1/teams")
@@ -49,19 +50,10 @@ public class TeamController {
     }
     /*팀삭제 api 단, 팀에 소속된 멤버들이 Null인 경우, 즉시 삭제가 가능하나, team을 참조하고 있는 member들이
     * 있다면, 멤버 먼저 삭제*/
-    @Transactional
     @DeleteMapping("v1/team/{id}")
     public SingleResult<String> deleteTeam(@PathVariable("id") Long id) {
-        Team findTeam = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("찾고자 하는 팀이 없습니다."));
-
-        repository.delete(findTeam);  // CascadeType.ALL 설정으로 연관된 Member들도 삭제됨.
-
-        String msg = findTeam.getTeamName() + "이 삭제되었습니다.";
+        String msg = teamService.deleteTeam(id);
         return responseService.handleSingleResult(msg);
     }
-
-
-
 
 }

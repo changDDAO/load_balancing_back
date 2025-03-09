@@ -13,12 +13,14 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class Team {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "team_id")
     private Long teamId;
     /*팀이름*/
     private String teamName;
-    @OneToMany(mappedBy = "team" ,cascade = CascadeType.ALL, orphanRemoval = true)
+    //    @OneToMany(mappedBy = "team" ,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "team")
     private List<Member> members = new ArrayList<>();
 
     @Builder
