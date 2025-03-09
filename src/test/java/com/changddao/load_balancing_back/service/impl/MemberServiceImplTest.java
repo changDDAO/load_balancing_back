@@ -121,6 +121,7 @@ class MemberServiceImplTest {
     }
     @Test
     @DisplayName("멤버 여러명 삭제 테스트")
+    @Transactional
     void deleteByIds(){
     //given
         MemberSearchDto cond = new MemberSearchDto();
@@ -131,7 +132,12 @@ class MemberServiceImplTest {
         for (Long memberId : memberIds) {
             log.info("memberId : {}", memberId);
         }
-    //then
+
+    //then( 특정팀에 소속된 멤버 여러명 삭제후, 특정 팀이름 조회 후 그 팀으로 조회되는
+    // 멤버수 검증
+        memberRepository.deleteMemberByIds(memberIds);
+        List<Member> afterMember = memberRepository.findAllMembersWithCond(cond);
+        assertThat(afterMember.size()).isEqualTo(0);
     }
 
 }
