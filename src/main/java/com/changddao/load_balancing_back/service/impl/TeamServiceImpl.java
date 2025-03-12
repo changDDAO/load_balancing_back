@@ -1,11 +1,9 @@
 package com.changddao.load_balancing_back.service.impl;
 
-import com.changddao.load_balancing_back.dto.response.SingleResult;
 import com.changddao.load_balancing_back.entity.Member;
 import com.changddao.load_balancing_back.entity.Team;
 import com.changddao.load_balancing_back.repository.team.TeamRepository;
 import com.changddao.load_balancing_back.service.MemberService;
-import com.changddao.load_balancing_back.service.ResponseService;
 import com.changddao.load_balancing_back.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

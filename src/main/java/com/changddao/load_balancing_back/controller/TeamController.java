@@ -3,14 +3,11 @@ package com.changddao.load_balancing_back.controller;
 import com.changddao.load_balancing_back.dto.TeamDto;
 import com.changddao.load_balancing_back.dto.response.MultipleResult;
 import com.changddao.load_balancing_back.dto.response.SingleResult;
-import com.changddao.load_balancing_back.entity.Member;
 import com.changddao.load_balancing_back.entity.Team;
 import com.changddao.load_balancing_back.repository.team.TeamRepository;
-import com.changddao.load_balancing_back.service.MemberService;
 import com.changddao.load_balancing_back.service.ResponseService;
 import com.changddao.load_balancing_back.service.TeamService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
