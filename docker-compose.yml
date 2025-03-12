@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Spring Boot 애플리케이션
+  springboot-app:
+    image: openjdk:17-jdk-slim
+    container_name: springboot-app
+    ports:
+      - "8080:8080"  # Spring Boot 애플리케이션 포트
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/mydb
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update  # 자동 테이블 생성
+      - SPRING_JPA_SHOW_SQL=true
+    volumes:
+      - ./target/myapp-0.0.1-SNAPSHOT.jar:/app/myapp.jar  # 빌드된 JAR 파일
+    command: ["java", "-jar", "/app/myapp.jar"]  # JAR 파일 실행
+    depends_on:
+      - mysql
+    networks:
+      - appnet
+
+  # MySQL 데이터베이스
+  mysql:
+    image: mysql:8.0
+    container_name: docker_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"  # MySQL 포트
+    volumes:
+      - mysql-data:/var/lib/mysql  # 데이터 지속성 설정
+    networks:
+      - appnet
+#
+#  # Nginx 웹 서버
+#  nginx:
+#    image: nginx:latest
+#    container_name: nginx
+#    ports:
+#      - "80:80"  # Nginx 포트 (웹 서버는 80번 포트를 사용)
+#    volumes:
+#      - ./nginx.conf:/etc/nginx/nginx.conf  # Nginx 설정 파일
+#      - ./static:/usr/share/nginx/html  # 정적 파일을 Nginx의 html 폴더에 매핑
+#    depends_on:
+#      - springboot-app  # Nginx는 Spring Boot 애플리케이션이 실행된 후에 시작
+#    networks:
+#      - appnet
+#
+#networks:
+#  appnet:
+#    driver: bridge
+#
+#volumes:
+#  mysql-data:
