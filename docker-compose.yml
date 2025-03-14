@@ -9,15 +9,17 @@ services:
     ports:
       - "8080:8080"  # Spring Boot 애플리케이션 포트
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/load_balancing?useSSL=false&serverTimezone=Asia/Seoul
+#      주의할 점 : container로 생성되는 service이름을 Mapping 해야함.
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/load_balancing_back?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
       - SPRING_DATASOURCE_USERNAME=changddao
       - SPRING_DATASOURCE_PASSWORD=Ych591204^
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=none  # DDL옵션 끄기
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create  # DDL옵션 끄기
       - SPRING_JPA_SHOW_SQL=true
 
     depends_on:
       mysql:
         condition: service_healthy
+    restart: always
     networks:
       - appnet
 
