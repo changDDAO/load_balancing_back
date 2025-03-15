@@ -2,6 +2,7 @@ package com.changddao.load_balancing_back.controller;
 
 import com.changddao.load_balancing_back.dto.MemberDto;
 import com.changddao.load_balancing_back.dto.MemberSearchDto;
+import com.changddao.load_balancing_back.dto.response.MultipleResult;
 import com.changddao.load_balancing_back.dto.response.SingleResult;
 import com.changddao.load_balancing_back.entity.Member;
 import com.changddao.load_balancing_back.repository.member.MemberRepository;
@@ -25,11 +26,15 @@ public class MemberController {
     public SingleResult<Page<MemberDto>> membersWithCond(MemberSearchDto cond,
                                                         @RequestParam(value ="page", defaultValue = "0") int page,
                                                         @RequestParam(value = "size", defaultValue = "10") int size) {
-        cond.setMinAge(20);
-        cond.setMaxAge(30);
         PageRequest pageRequest = PageRequest.of(page, size);
         return responseService.handleSingleResult(memberService.findAllWithTeam(cond, pageRequest));
     }
+    /*Paging없이 멤버 전체 조회하기, 데이터 양이 많지 않기 때문에 현재 테스트 용도로는 괜찮다.*/
+    @PostMapping("/v1/members")
+    public MultipleResult<MemberDto> getMembers(MemberSearchDto cond) {
+        /*memberService.*/
+    }
+
     /*멤버 단건 조회*/
     @GetMapping("/v1/member/{id}")
     public SingleResult<Member> findMember(@PathVariable("id") Long id) {

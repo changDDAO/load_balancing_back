@@ -13,7 +13,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/load_balancing_back?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
       - SPRING_DATASOURCE_USERNAME=changddao
       - SPRING_DATASOURCE_PASSWORD=Ych591204^
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create  # DDL옵션 끄기
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none  # DDL옵션 끄기
       - SPRING_JPA_SHOW_SQL=true
 
     depends_on:
