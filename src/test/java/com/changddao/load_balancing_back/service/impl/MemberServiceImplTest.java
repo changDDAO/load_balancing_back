@@ -140,4 +140,16 @@ class MemberServiceImplTest {
         assertThat(afterMember.size()).isEqualTo(0);
     }
 
+    @Test
+    @DisplayName("멤버전체조회 Test")
+    void getMembersTest(){
+    //given
+        List<Member> members = memberRepository.findAll();
+        //when
+        for (Member member : members) {
+            log.info("memberName : {}",member.getName());
+        }
+    //then
+    }
+
 }
