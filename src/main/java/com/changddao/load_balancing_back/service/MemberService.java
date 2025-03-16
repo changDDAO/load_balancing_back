@@ -22,6 +22,8 @@ public interface MemberService {
     /*멤버 삭제*/
     void deleteById(Long id);
 
+    List<MemberDto> findAllMembers(MemberSearchDto cond);
+
     /*멤버 여러명 삭제*/
     void deleteByIds(List<Long> memberIds);
 }

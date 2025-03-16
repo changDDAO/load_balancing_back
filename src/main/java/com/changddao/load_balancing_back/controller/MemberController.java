@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,7 +34,8 @@ public class MemberController {
     /*Paging없이 멤버 전체 조회하기, 데이터 양이 많지 않기 때문에 현재 테스트 용도로는 괜찮다.*/
     @PostMapping("/v1/members")
     public MultipleResult<MemberDto> getMembers(MemberSearchDto cond) {
-        /*memberService.*/
+        List<MemberDto> allMembers = memberService.findAllMembers(cond);
+        return responseService.handleListResult(allMembers);
     }
 
     /*멤버 단건 조회*/

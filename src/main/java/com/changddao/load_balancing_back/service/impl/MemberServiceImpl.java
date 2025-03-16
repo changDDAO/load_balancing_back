@@ -53,6 +53,17 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.deleteById(id);
     }
 
+    @Override
+    public List<MemberDto> findAllMembers(MemberSearchDto cond) {
+        /*조회된 멤버가 없다면,*/
+        if (memberRepository.findAll().isEmpty()) {
+            return null;
+        }
+        List<Member> members = memberRepository.findAll();
+        List<MemberDto> list = members.stream().map(MemberDto::convertMemberDto).toList();
+        return list;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public void deleteByIds(List<Long> memberIds) {
