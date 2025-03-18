@@ -55,13 +55,13 @@ public class MemberController {
     @Transactional
     @DeleteMapping("/v1/member/{id}")
     public SingleResult<Long> deleteMember(@PathVariable("id") Long id) {
-        deleteMember(id);
+        memberService.deleteById(id);
         return responseService.handleSingleResult(id);
     }
     /*멤버 정보 변경*/
     @Transactional
     @PutMapping("/v1/member/{id}")
-    public SingleResult<Member> changeMember(@RequestBody Member member) {
+    public SingleResult<Member> changeMember(@PathVariable("id") Long id, @RequestBody Member member) {
         Member findMember = memberRepository.findById(member.getMemberId()).orElseThrow(() -> new RuntimeException("찾고자하는 멤버가 없습니다."));
         findMember.changeName(member.getName());
         return responseService.handleSingleResult(findMember);
