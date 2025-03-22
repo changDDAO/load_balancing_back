@@ -62,7 +62,7 @@ public class MemberController {
     @Transactional
     @PutMapping("/v1/member/{id}")
     public SingleResult<Member> changeMember(@PathVariable("id") Long id, @RequestBody Member member) {
-        Member findMember = memberRepository.findById(member.getMemberId()).orElseThrow(() -> new RuntimeException("찾고자하는 멤버가 없습니다."));
+        Member findMember = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("찾고자하는 멤버가 없습니다."));
         findMember.changeName(member.getName());
         return responseService.handleSingleResult(findMember);
     }
