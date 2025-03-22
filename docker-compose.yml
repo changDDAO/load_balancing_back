@@ -11,8 +11,8 @@ services:
     environment:
 #      주의할 점 : container로 생성되는 service이름을 Mapping 해야함.
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/load_balancing_back?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
-      - SPRING_DATASOURCE_USERNAME=changddao
-      - SPRING_DATASOURCE_PASSWORD=Ych591204^
+      - SPRING_DATASOURCE_USERNAME= ${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD= ${DB_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=none  # DDL옵션 끄기
       - SPRING_JPA_SHOW_SQL=true
 
@@ -30,8 +30,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: load_balancing_back
-      MYSQL_USER: changddao
-      MYSQL_PASSWORD: Ych591204^
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s

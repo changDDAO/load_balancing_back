@@ -18,6 +18,9 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+##info file
+.env
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
