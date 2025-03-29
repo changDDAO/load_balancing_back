@@ -8,6 +8,7 @@ ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} load_balancing_back.jar
 
 # 4. 실행 명령어 (spring.profiles.active=prod 설정)
-#ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "/electronic.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "/load_balancing_back.jar"]
+
 # 실행환경을 나누지않고, 현재 프로젝트 build
-ENTRYPOINT ["java", "-jar", "/load_balancing_back.jar"]
+#ENTRYPOINT ["java", "-jar", "/load_balancing_back.jar"]
