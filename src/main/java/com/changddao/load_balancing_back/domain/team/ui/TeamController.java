@@ -1,4 +1,4 @@
-package com.changddao.load_balancing_back.controller;
+package com.changddao.load_balancing_back.domain.team.ui;
 
 import com.changddao.load_balancing_back.dto.TeamDto;
 import com.changddao.load_balancing_back.dto.response.MultipleResult;
@@ -10,8 +10,6 @@ import com.changddao.load_balancing_back.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

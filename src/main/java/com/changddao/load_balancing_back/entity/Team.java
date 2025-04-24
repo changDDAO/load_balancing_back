@@ -1,6 +1,6 @@
 package com.changddao.load_balancing_back.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
