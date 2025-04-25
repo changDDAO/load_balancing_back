@@ -1,6 +1,4 @@
-package com.changddao.load_balancing_back.team.domain;
-
-import com.changddao.load_balancing_back.member.domain.Member;
+package com.changddao.load_balancing_back.member.domain;
 
 import java.util.List;
 import java.util.Optional;
