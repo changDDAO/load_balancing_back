@@ -1,4 +1,4 @@
-package com.changddao.load_balancing_back.domain.member.ui;
+package com.changddao.load_balancing_back.member.ui;
 
 import com.changddao.load_balancing_back.dto.MemberDto;
 import com.changddao.load_balancing_back.dto.MemberSearchDto;
