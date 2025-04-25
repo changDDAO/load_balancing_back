@@ -1,4 +1,4 @@
-package com.changddao.load_balancing_back.entity;
+package com.changddao.load_balancing_back.common.global.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

@@ -1,16 +1,16 @@
 package com.changddao.load_balancing_back.entity;
 
+import com.changddao.load_balancing_back.common.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /*현재 가정은 한팀에 여러 멤버들이 속할 수 있는 것으로 가정한다.*/
 @Entity
 @NoArgsConstructor
 @Getter
-public class Member extends BaseEntity{
+public class Member extends BaseEntity {
     @Id @GeneratedValue
     @Column(name = "member_id")
     private Long memberId;
