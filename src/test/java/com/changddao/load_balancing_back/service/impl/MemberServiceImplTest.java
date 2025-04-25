@@ -1,9 +1,9 @@
 package com.changddao.load_balancing_back.service.impl;
 
 import com.changddao.load_balancing_back.dto.MemberSearchDto;
-import com.changddao.load_balancing_back.entity.Address;
-import com.changddao.load_balancing_back.entity.Member;
-import com.changddao.load_balancing_back.entity.Team;
+import com.changddao.load_balancing_back.member.domain.Address;
+import com.changddao.load_balancing_back.member.domain.Member;
+import com.changddao.load_balancing_back.team.domain.Team;
 import com.changddao.load_balancing_back.repository.member.MemberRepository;
 import com.changddao.load_balancing_back.repository.team.TeamRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

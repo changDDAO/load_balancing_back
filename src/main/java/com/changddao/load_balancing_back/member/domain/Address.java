@@ -1,8 +1,7 @@
-package com.changddao.load_balancing_back.entity;
+package com.changddao.load_balancing_back.member.domain;
 
 import jakarta.persistence.Embeddable;
 import lombok.Builder;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

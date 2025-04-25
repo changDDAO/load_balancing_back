@@ -1,6 +1,7 @@
-package com.changddao.load_balancing_back.entity;
+package com.changddao.load_balancing_back.member.domain;
 
 import com.changddao.load_balancing_back.common.global.entity.BaseEntity;
+import com.changddao.load_balancing_back.team.domain.Team;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
