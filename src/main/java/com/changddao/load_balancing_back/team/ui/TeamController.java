@@ -1,4 +1,4 @@
-package com.changddao.load_balancing_back.domain.team.ui;
+package com.changddao.load_balancing_back.team.ui;
 
 import com.changddao.load_balancing_back.dto.TeamDto;
 import com.changddao.load_balancing_back.dto.response.MultipleResult;

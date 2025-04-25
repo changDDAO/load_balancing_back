@@ -26,7 +26,7 @@ public class InitService {
 
     @PostConstruct
     public void initDummyData() {
-        /*db에 더미 데이터가 들어있는 지 checking*/
+        /*db에 더미 데이터가 들어있는 지 checing*/
         if (memberRepository.count() > 0) {
             log.info("이미 Member 더미데이터가 있습니다. ");
             return;
