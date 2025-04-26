@@ -2,6 +2,7 @@ package com.changddao.load_balancing_back.member.domain.service;
 
 import com.changddao.load_balancing_back.member.domain.Member;
 import com.changddao.load_balancing_back.member.domain.MemberRepository;
+import com.changddao.load_balancing_back.member.domain.event.MemberAssignedToTeamEvent;
 import com.changddao.load_balancing_back.member.domain.event.MemberCreatedEvent;
 import com.changddao.load_balancing_back.member.infra.kafka.MemberEventPublisher;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("멤버 없음"));
         member.changeTeamId(teamId); // 도메인에 teamId 넣는 방식
+        eventPublisher.publishMemberAssignedToTeam(MemberAssignedToTeamEvent.createBy(member));
     }
 
     @Transactional(readOnly = true)
@@ -41,4 +43,4 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalArgumentException("멤버 없음"));
     }
 }
-}
+
