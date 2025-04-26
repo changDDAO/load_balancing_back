@@ -3,6 +3,7 @@ package com.changddao.load_balancing_back.member.infra.kafka;
 import com.changddao.load_balancing_back.member.domain.event.MemberAssignedToTeamEvent;
 import com.changddao.load_balancing_back.member.domain.event.MemberCreatedEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor

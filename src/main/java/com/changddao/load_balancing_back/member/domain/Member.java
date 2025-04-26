@@ -44,5 +44,12 @@ public class Member extends BaseEntity {
         this.address = newAddress;
     }
 
+    /**
+     * 팀 변경
+     */
+    public void changeTeamId(Long id) {
+        this.teamId = id;
+    }
+
 
 }

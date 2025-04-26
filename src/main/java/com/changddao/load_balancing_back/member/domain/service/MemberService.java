@@ -2,6 +2,8 @@ package com.changddao.load_balancing_back.member.domain.service;
 
 import com.changddao.load_balancing_back.member.domain.Member;
 import com.changddao.load_balancing_back.member.domain.MemberRepository;
+import com.changddao.load_balancing_back.member.domain.event.MemberCreatedEvent;
+import com.changddao.load_balancing_back.member.infra.kafka.MemberEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final EventPublisher eventPublisher;
+    private final MemberEventPublisher eventPublisher;
 
     @Transactional
     public void createMember(Member member) {
         memberRepository.save(member);
-        eventPublisher.publish(new MemberCreatedEvent(member));
+        eventPublisher.publishMemberCreated(MemberCreatedEvent.createBy(member));
     }
 
     @Transactional
@@ -30,7 +32,7 @@ public class MemberService {
     public void changeTeam(Long memberId, Long teamId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("멤버 없음"));
-        member.setTeamId(teamId); // 도메인에 teamId 넣는 방식
+        member.changeTeamId(teamId); // 도메인에 teamId 넣는 방식
     }
 
     @Transactional(readOnly = true)
