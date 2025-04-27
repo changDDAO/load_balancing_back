@@ -1,5 +1,6 @@
 package com.changddao.load_balancing_back.member.domain.service;
 
+import com.changddao.load_balancing_back.member.domain.Address;
 import com.changddao.load_balancing_back.member.domain.Member;
 import com.changddao.load_balancing_back.member.domain.MemberRepository;
 import com.changddao.load_balancing_back.member.domain.event.MemberAssignedToTeamEvent;
@@ -27,6 +28,18 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 멤버입니다."));
         member.changeName(newName);
+    }
+
+    /**
+     * 회원 주소 변경
+     * @param memberId 대상 회원 ID
+     * @param newAddress 새 주소 (Address 객체)
+     */
+    @Transactional
+    public void changeAddress(Long memberId, Address newAddress) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with id: " + memberId));
+        member.changeAddress(newAddress); // Member 엔티티의 내부 메서드 호출
     }
 
     @Transactional
