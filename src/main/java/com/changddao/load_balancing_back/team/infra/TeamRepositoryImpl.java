@@ -5,6 +5,7 @@ import com.changddao.load_balancing_back.team.domain.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,5 +21,15 @@ public class TeamRepositoryImpl implements TeamRepository {
     @Override
     public Optional<Team> findById(Long id) {
         return jpaTeamRepository.findById(id);
+    }
+
+    @Override
+    public List<Team> findAll() {
+        return jpaTeamRepository.findAll();
+    }
+
+    @Override
+    public void delete(Team team) {
+        jpaTeamRepository.delete(team);
     }
 }
