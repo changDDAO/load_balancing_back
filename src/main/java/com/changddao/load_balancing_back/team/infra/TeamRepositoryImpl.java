@@ -3,9 +3,11 @@ package com.changddao.load_balancing_back.team.infra;
 import com.changddao.load_balancing_back.team.domain.Team;
 import com.changddao.load_balancing_back.team.domain.TeamRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 @RequiredArgsConstructor
 public class TeamRepositoryImpl implements TeamRepository {
 
