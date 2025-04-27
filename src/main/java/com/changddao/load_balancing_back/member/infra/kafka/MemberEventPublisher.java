@@ -13,10 +13,10 @@ public class MemberEventPublisher {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void publishMemberCreated(MemberCreatedEvent event) {
-        kafkaTemplate.send("member.created", event);
+        kafkaTemplate.send("member-created-topic", event);
     }
 
     public void publishMemberAssignedToTeam(MemberAssignedToTeamEvent event) {
-        kafkaTemplate.send("member.assigned-to-team", event);
+        kafkaTemplate.send("member-assigned-team-topic", event);
     }
 }
