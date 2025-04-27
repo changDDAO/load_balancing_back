@@ -1,1 +1,5 @@
 rootProject.name = 'load_balancing_back'
+
+
+include 'member'
+include 'team'
